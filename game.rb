@@ -29,15 +29,29 @@ class Game
 
 
     def play_hangman()
-        
+        @game_over = false
+        @display.enter_to_continue
         @letters = @word.split("")
         @guessed_letters = []
         @incorrect_letters = []
         @blank_spots = Array.new(@letters.length, "_")
+        @display.explain_hangman
+        @guesses_left = 9
+
+        while @game_over == false
+            @display.update_display(@guesses_left, @incorrect_letters, @blank_spots)
+            
+
+            guess_letter
+            @display.enter_to_continue
 
 
 
-        @display.show_blank_spots(@blank_spots)
+        end
+
+
+
+        
         
 
 
@@ -47,9 +61,9 @@ class Game
 
     end
 
-    def guessed_letter
+    def guess_letter
         @display.guess_letter_prompt
-        player_guess = ""
+        player_guess = "a"
         while player_guess.ord > 90 || player_guess.ord < 65
             player_guess = gets.chomp.upcase
             
