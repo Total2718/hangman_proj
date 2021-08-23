@@ -1,21 +1,26 @@
-
+require_relative "display.rb"
 
 class Game
     attr_reader :letters, :guessed_letters, :incorrect_letters, :blank_spots
     attr_reader :name
     def pick_word
-                random_line = nil
-        File.open("lib/word_list.txt") do |file|
-            file_lines = file.readlines()
-            random_line = file_lines[Random.rand(0...file_lines.size())]
-        end 
 
-        random_line 
+                random_line = ""
+        while random_line.length > 12 || random_line.length < 5 do
+            File.open("lib/word_list.txt") do |file|
+                file_lines = file.readlines()
+                random_line = file_lines[Random.rand(0...file_lines.size())]
+
+            end 
+        end
+        
+        random_line.upcase!
+    
     end
     def initialize(name)
         @name = name
         @word = pick_word
-        @display = Display.new
+        @display = Display.new(@name)
         
 
     end
@@ -29,14 +34,29 @@ class Game
         @guessed_letters = []
         @incorrect_letters = []
         @blank_spots = Array.new(@letters.length, "_")
-        @display.update_display
+
+
+
+        @display.show_blank_spots(@blank_spots)
         
 
+
+
         
+    
+
+    end
+
+    def guessed_letter
+        @display.guess_letter_prompt
+        player_guess = ""
+        while player_guess.ord > 90 || player_guess.ord < 65
+            player_guess = gets.chomp.upcase
+            
+
+        end
+
         
-
-
-
     end
 
     

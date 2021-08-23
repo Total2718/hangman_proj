@@ -1,6 +1,8 @@
 require_relative 'game.rb'
 require_relative 'display.rb'
 
+currently_playing = true
+
 def play
     puts "Please enter your name."
     name = gets.chomp
@@ -11,4 +13,17 @@ def play
     
 end
 
-play
+while currently_playing == true
+    answer = nil
+    while answer != "Yes" && answer != "No"
+        puts "Would you like to play a game of hang man?"
+        puts "Enter 'Yes' or 'No'."
+        
+        answer = gets.chomp
+    end
+    if answer == "Yes"
+        play
+    elsif answer == "No"
+        puts "Have a great day!"
+    end
+end
