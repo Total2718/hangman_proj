@@ -25,5 +25,6 @@ while currently_playing == true
         play
     elsif answer == "No"
         puts "Have a great day!"
+        currently_playing = false
     end
 end

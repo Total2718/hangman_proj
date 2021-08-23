@@ -43,9 +43,11 @@ class Display
 
 
     def update_display(guesses_remaining, incorrect_letters, blanks)
-        puts "Incorrect Letters: "
-        incorrect_letters.each do |letter|
+        print "Incorrect Letters: "
+        incorrect_letters.sort.each do |letter|
             print " #{letter}"
+        end
+        puts "\n"
         puts "Body Parts Remaining: #{guesses_remaining}"
         puts "\n"
         puts "\t\t"
@@ -58,6 +60,16 @@ class Display
         
 
 
+    end
+    
+    def win()
+        puts "Congratulations #{@name}, you've correctly guessed the word."
+    end
+
+    def lose(word)
+        puts "Looks like you're all out of body parts for the hang man."\
+        "\n The word was #{word}"
+        "Good luck next time."
     end
 
 
