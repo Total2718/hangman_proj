@@ -1,4 +1,6 @@
 require_relative "display.rb"
+require 'yaml'
+require_relative 'file_manip.rb'
 
 class Game
     attr_reader :letters, :guessed_letters, :incorrect_letters, :blank_spots
@@ -17,11 +19,14 @@ class Game
         random_line.upcase!
     
     end
-    def initialize(name)
-        @name = name
-        @word = pick_word.chomp
-        @display = Display.new(@name)
-        
+    def initialize(name, new_game)
+        if new_game == true
+            @name = name
+            @word = pick_word.chomp
+            @display = Display.new(@name)
+        elsif new_game == false
+
+        end
 
     end
 
@@ -40,7 +45,7 @@ class Game
         @display.explain_hangman
         @guesses_left = 9
         
-
+        
         while @game_over == false
             
             @display.update_display(@guesses_left, @incorrect_letters, @blank_spots)

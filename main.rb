@@ -1,5 +1,6 @@
 require_relative 'game.rb'
 require_relative 'display.rb'
+require 'yaml'
 
 currently_playing = true
 
