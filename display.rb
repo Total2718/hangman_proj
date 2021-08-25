@@ -21,7 +21,7 @@ class Display
     end
 
     def guess_letter_prompt
-        print "Choose a letter wisely:"
+        print "Choose a letter wisely or enter 'save' to save the current game:"
         
     end
 

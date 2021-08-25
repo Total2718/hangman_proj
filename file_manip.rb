@@ -8,6 +8,7 @@ module FileManip
         File.open("saved_games/#{@filename}", 'w') do |file| 
             file.write save_in_yaml
         end
+        puts "The game has been saved and is named '#{@filename}'.s"
 
 
         
@@ -36,19 +37,55 @@ module FileManip
     def save_in_yaml
 
         YAML.dump(
-            'word' => @word
-            'letters' => @letters
-            'guesses_left' => @guesses_left
-            'guessed_letters' => @guessed_letters
-            'blank_spots' => @blank_spots
-            'name' => @name
+            'word' => @word,
+            'letters' => @letters,
+            'guesses_left' => @guesses_left,
+            'guessed_letters' => @guessed_letters,
+            'blank_spots' => @blank_spots,
+            'name' => @name,
         )
+    end
 
+    def load_game 
+       n = pick_game_save
+        # @letters =
+        # @word = 
+        # @guesses_left =
+        # @guessed_letters = 
+        # @blank_spots =
+        # @name =
+
+    end
+
+    def pick_game_save
+        choice = false
+        while choice == false
+            puts "Please select a file below"
+            show_saved_games
+            puts "Please enter the corresponding number to play the saved game."
+            puts "If you'd like to exit and play a new game, enter 'Exit' . "
+            answer = gets.chomp
+             
+            if answer == 'Exit'
+                choice = true
+                return 'Exit'
+            elsif [1..999].include?(answer.to_int)
+                choice = true
+            else
+                
+            end
+        end
+    end
+
+    def show_saved_games
+        
+
+        
 
     end
 
 end
 
 
-FileManip.save_game
+
 

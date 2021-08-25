@@ -3,6 +3,7 @@ require 'yaml'
 require_relative 'file_manip.rb'
 
 class Game
+include FileManip
     attr_reader :letters, :guessed_letters, :incorrect_letters, :blank_spots
     attr_reader :name
     def pick_word
@@ -19,12 +20,38 @@ class Game
         random_line.upcase!
     
     end
-    def initialize(name, new_game)
+    def initialize()
+        new_game = load_or_new_game
         if new_game == true
-            @name = name
+            puts "Please enter your name."
+        name = gets.chomp
+        
+            @name
             @word = pick_word.chomp
             @display = Display.new(@name)
+            @letters = @word.split("")
+            @guesses_left = 9
+            @guessed_letters = []
+            @incorrect_letters = []
+            @blank_spots = Array.new(@letters.length, "_")
+            @display.explain_hangman
+            play_hangman
         elsif new_game == false
+             if Dir.empty?('./saved_games') == true
+                puts "Sorry, there are no games saved."
+             else
+               load_choice = load_game
+               if load_choice != 'Exit'
+                play_hangman
+               end
+                
+             end
+            
+
+        
+           
+
+
 
         end
 
@@ -35,15 +62,7 @@ class Game
 
     def play_hangman()
         @game_over = false
-        @display.enter_to_continue
         
-        @letters = @word.split("")
-        
-        @guessed_letters = []
-        @incorrect_letters = []
-        @blank_spots = Array.new(@letters.length, "_")
-        @display.explain_hangman
-        @guesses_left = 9
         
         
         while @game_over == false
@@ -54,7 +73,7 @@ class Game
             player_guess = "g"
             while guess_chosen == false           
                 player_guess = guess_letter
-                
+                break if player_guess == 'save'
 
                 @display.enter_to_continue
                 if @guessed_letters.include?(player_guess) == true
@@ -67,7 +86,7 @@ class Game
 
                 end
             end
-
+            break if player_guess == 'save'
             check_guess(player_guess)
 
             check_game_over
@@ -75,17 +94,6 @@ class Game
 
 
         end
-
-
-
-        
-        
-
-
-
-        
-    
-
     end
 
     def guess_letter
@@ -95,20 +103,25 @@ class Game
                 
                 @display.guess_letter_prompt
                 player_guess = gets.chomp
+            if player_guess == 'save'
+                save_game
+                break
+            else
                 if player_guess.empty? == true
                     player_guess = "aa"
                     next
                 end
            
             
-            if player_guess.ord > 96 && player_guess.ord < 123
-                player_guess.upcase!
+                if player_guess.ord > 96 && player_guess.ord < 123
+                    player_guess.upcase!
+                end
+            
+            
+                if player_guess.length != 1
+                    player_guess = "aa"
+                end
             end
-            
-            
-           if player_guess.length != 1
-            player_guess = "aa"
-           end
            
            
 
@@ -149,7 +162,27 @@ class Game
         end
     end
 
-    
+    def load_or_new_game()
+        puts "Would you like to play a new game or load a saved game?"
+        puts ("1) New game")
+        puts ("2) Load saved game")
+       
+        choice_valid = false
+        choice = ''
+        game = ''
+        while choice_valid == false
+            puts "Please enter '1' or '2'."
+            choice = gets.chomp
+            if ["1", "2"].include?(choice)
+                choice_valid = true
+            end
+        end
+        if choice == '1'
+            true
+        elsif choice == '2'
+            false
+        end
+    end
 
 
 
