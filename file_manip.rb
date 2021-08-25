@@ -8,7 +8,9 @@ module FileManip
         File.open("saved_games/#{@filename}", 'w') do |file| 
             file.write save_in_yaml
         end
-        puts "The game has been saved and is named '#{@filename}'.s"
+        puts "\n\n\n"
+        puts "The game has been saved and is named '#{@filename}'."
+        puts "\n\n\n"
 
 
         
@@ -99,13 +101,17 @@ module FileManip
     end
 
     def load_file(file_number)
+       
         list_of_saves = Dir.entries("./saved_games")
         list_of_saves.delete_if { |element| element == "." || element == ".."}
         puts list_of_saves
         filename = "./saved_games/#{list_of_saves[file_number - 1]}"
+        puts "\n\n\n"
         file = File.open(filename, 'r')
-         hash = YAML.load(File.read(filename))
+         
+         hash = YAML.load_file(filename)
          File.delete(filename)
+         
         return hash
 
         

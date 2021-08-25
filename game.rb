@@ -39,6 +39,7 @@ include FileManip
         elsif new_game == false
              if Dir.empty?('./saved_games') == true
                 puts "Sorry, there are no games saved."
+                puts "\n\n\n"
              else
                load_choice = load_game
                if load_choice != 'Exit'
