@@ -44,8 +44,10 @@ class Display
 
     def update_display(guesses_remaining, incorrect_letters, blanks)
         print "Incorrect Letters: "
-        incorrect_letters.sort.each do |letter|
-            print " #{letter}"
+        if incorrect_letters.empty? == false
+         incorrect_letters.each do |letter|
+               print " #{letter}"
+            end
         end
         puts "\n"
         puts "Body Parts Remaining: #{guesses_remaining}"

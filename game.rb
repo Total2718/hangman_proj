@@ -42,19 +42,11 @@ include FileManip
              else
                load_choice = load_game
                if load_choice != 'Exit'
+                @display = Display.new(@name)
                 play_hangman
                end
-                
              end
-            
-
-        
-           
-
-
-
         end
-
     end
 
     
